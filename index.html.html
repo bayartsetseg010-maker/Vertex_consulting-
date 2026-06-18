@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vertex Consulting Group</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0D1F35; /* food safety focus */
+    --navy-mid: #162B47;
+    --gold: #C9A84C;
+    --gold-light: #E8CC7A;
+    --cream: #F8F5EE;
+    --white: #FFFFFF;
+    --slate: #4A5568;
+    --light-slate: #8A9AB0;
+    --border: rgba(201,168,76,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    overflow-x: hidden;
+  }
+
+  /* LANGUAGE TOGGLE */
+  .lang-bar {
+    background: var(--navy);
+    padding: 8px 40px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 6px;
+  }
+  .lang-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--light-slate);
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    padding: 4px 12px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+  .lang-btn.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--navy);
+    font-weight: 600;
+  }
+
+  /* NAV */
+  nav {
+    background: var(--navy);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 1px;
+  }
+  .logo span { color: var(--gold); }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--light-slate);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    background: var(--navy);
+    padding: 100px 40px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    min-height: 88vh;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    right: -100px;
+    top: -100px;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    opacity: 0.4;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    right: -50px;
+    top: -50px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    opacity: 0.3;
+  }
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(38px, 5vw, 64px);
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 28px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--gold);
+  }
+  .hero-sub {
+    color: var(--light-slate);
+    font-size: 15px;
+    line-height: 1.8;
+    max-width: 480px;
+    margin-bottom: 40px;
+  }
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--gold);
+    color: var(--navy);
+    text-decoration: none;
+    padding: 14px 32px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .hero-cta:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+  .hero-cta-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid var(--border);
+    color: var(--light-slate);
+    text-decoration: none;
+    padding: 14px 32px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    margin-left: 12px;
+  }
+  .hero-cta-outline:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  .credential-card {
+    border: 1px solid var(--border);
+    padding: 20px 24px;
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(4px);
+  }
+  .credential-label {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .credential-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--white);
+    font-weight: 400;
+  }
+  .credential-sub {
+    font-size: 11px;
+    color: var(--light-slate);
+    margin-top: 4px;
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--gold);
+    padding: 24px 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+  .stat-item {
+    text-align: center;
+    padding: 10px 0;
+    border-right: 1px solid rgba(13,31,53,0.2);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--navy-mid);
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 80px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-eyebrow {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 300;
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+  .section-divider {
+    width: 48px;
+    height: 1px;
+    background: var(--gold);
+    margin-bottom: 40px;
+  }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .service-card {
+    background: var(--navy);
+    padding: 36px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+  .service-card:hover { transform: translateY(-4px); }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--gold);
+  }
+  .service-icon {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    color: rgba(201,168,76,0.12);
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .service-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .service-card p {
+    font-size: 13px;
+    color: var(--light-slate);
+    line-height: 1.75;
+    margin-bottom: 20px;
+  }
+  .service-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .tag {
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    color: var(--gold);
+    padding: 4px 10px;
+  }
+
+  /* ABOUT */
+  .about-section {
+    background: var(--navy);
+    padding: 80px 0;
+  }
+  .about-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-photo-frame {
+    position: relative;
+  }
+  .about-photo-placeholder {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .photo-icon { font-size: 48px; opacity: 0.3; }
+  .photo-hint {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--light-slate);
+    text-align: center;
+    padding: 0 20px;
+  }
+  .about-photo-frame::after {
+    content: '';
+    position: absolute;
+    bottom: -16px;
+    right: -16px;
+    width: 60%;
+    height: 60%;
+    border: 1px solid var(--border);
+    z-index: -1;
+  }
+  .about-content .section-title { color: var(--white); }
+  .about-content .section-eyebrow { color: var(--gold); }
+  .about-body {
+    color: var(--light-slate);
+    font-size: 14px;
+    line-height: 1.85;
+    margin-bottom: 32px;
+  }
+  .credentials-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .cred-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .cred-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+  .cred-text {
+    font-size: 12px;
+    color: var(--white);
+    line-height: 1.5;
+  }
+
+  /* WHY */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    margin-top: 48px;
+  }
+  .why-card {
+    padding: 32px;
+    border: 1px solid rgba(13,31,53,0.12);
+    border-left: 3px solid var(--gold);
+    background: var(--white);
+  }
+  .why-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+  .why-card p {
+    font-size: 13px;
+    color: var(--slate);
+    line-height: 1.75;
+  }
+
+  /* CONTACT */
+  .contact-section {
+    background: var(--navy);
+    padding: 80px 40px;
+    text-align: center;
+  }
+  .contact-inner {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .contact-section .section-title { color: var(--white); }
+  .contact-section .section-eyebrow { color: var(--gold); }
+  .contact-sub {
+    color: var(--light-slate);
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 40px;
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 36px;
+    text-align: left;
+  }
+  .contact-item {
+    border: 1px solid var(--border);
+    padding: 20px;
+  }
+  .contact-item-label {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .contact-item-value {
+    font-size: 13px;
+    color: var(--white);
+  }
+  .btn-primary {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    text-decoration: none;
+    padding: 16px 40px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  /* FOOTER */
+  footer {
+    background: #08131F;
+    padding: 32px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--white);
+  }
+  .footer-logo span { color: var(--gold); }
+  .footer-copy {
+    font-size: 11px;
+    color: var(--light-slate);
+    letter-spacing: 0.5px;
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .lang-bar { padding: 8px 20px; }
+    .hero {
+      grid-template-columns: 1fr;
+      padding: 60px 20px 50px;
+      min-height: auto;
+    }
+    .hero-right { display: none; }
+    .stats-bar { grid-template-columns: 1fr; padding: 20px; }
+    .stat-item { border-right: none; border-bottom: 1px solid rgba(13,31,53,0.2); padding: 16px 0; }
+    .stat-item:last-child { border-bottom: none; }
+    section { padding: 60px 20px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .about-inner { grid-template-columns: 1fr; padding: 0 20px; }
+    .about-photo-frame { display: none; }
+    .why-grid { grid-template-columns: 1fr; }
+    .contact-section { padding: 60px 20px; }
+    .contact-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 12px; text-align: center; padding: 24px 20px; }
+  }
+
+  /* HIDDEN LANG CONTENT */
+  .mn { display: none; }
+</style>
+</head>
+<body>
+
+<!-- LANG BAR -->
+<div class="lang-bar">
+  <button class="lang-btn active" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" onclick="setLang('mn')">МН</button>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Vertex<span>.</span>Consulting</div>
+  <ul class="nav-links">
+    <li><a href="#services" class="en">Services</a><a href="#services" class="mn" style="display:none">Үйлчилгээ</a></li>
+    <li><a href="#about" class="en">About</a><a href="#about" class="mn" style="display:none">Бидний тухай</a></li>
+    <li><a href="#why" class="en">Why Us</a><a href="#why" class="mn" style="display:none">Яагаад бид</a></li>
+    <li><a href="#contact" class="en">Contact</a><a href="#contact" class="mn" style="display:none">Холбоо барих</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow en">Quality · Food Safety · Excellence</div>
+    <div class="hero-eyebrow mn" style="display:none">Чанар · Хүнсний Аюулгүй байдал · Өндөр мэргэжил</div>
+    <h1 class="en">Where <em>Standards</em> Become Competitive Advantage</h1>
+    <h1 class="mn" style="display:none">Стандарт нь таны бизнесийн <em>давуу тал</em> болдог газар</h1>
+    <p class="hero-sub en">Specialist consulting in Food Safety, Quality Management, and Project Excellence — for organisations in Australia, Mongolia, and the Asia-Pacific region.</p>
+    <p class="hero-sub mn" style="display:none">Хүнсний аюулгүй байдал, Чанарын менежмент, Төслийн удирдлагын мэргэшсэн зөвлөх үйлчилгээ — Австрали, Монгол болон Азийн орнуудад.</p>
+    <div>
+      <a href="https://calendly.com/bayartsetseg010/30min" target="_blank" class="hero-cta en">Book a Free Consultation</a>
+      <a href="https://calendly.com/bayartsetseg010/30min" target="_blank" class="hero-cta mn" style="display:none">Үнэгүй зөвлөгөө авах</a>
+      <a href="#services" class="hero-cta-outline en">Our Services</a>
+      <a href="#services" class="hero-cta-outline mn" style="display:none">Үйлчилгээ</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="credential-card">
+      <div class="credential-label">Certification</div>
+      <div class="credential-value">FSSC 22000 / ISO 22000</div>
+      <div class="credential-sub">Food Safety System Certification</div>
+    </div>
+    <div class="credential-card">
+      <div class="credential-label">Certification</div>
+      <div class="credential-value">ISO 9001 · PMP®</div>
+      <div class="credential-sub">Quality & Project Management</div>
+    </div>
+    <div class="credential-card">
+      <div class="credential-label">Education</div>
+      <div class="credential-value">Master of Project Management</div>
+      <div class="credential-sub">Central Queensland University, Australia</div>
+    </div>
+    <div class="credential-card">
+      <div class="credential-label">Industry Experience</div>
+      <div class="credential-value">APU Company · Mongolia</div>
+      <div class="credential-sub">Senior Quality & Food Safety Lead</div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">10+</div>
+    <div class="stat-label en">Years of Industry Experience</div>
+    <div class="stat-label mn" style="display:none">Жилийн туршлага</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">3</div>
+    <div class="stat-label en">Core Service Pillars</div>
+    <div class="stat-label mn" style="display:none">Үндсэн үйлчилгээний чиглэл</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">2</div>
+    <div class="stat-label en">Countries Served</div>
+    <div class="stat-label mn" style="display:none">Орон</div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-eyebrow en">What We Do</div>
+  <div class="section-eyebrow mn" style="display:none">Үйлчилгээ</div>
+  <h2 class="section-title en">Three Pillars of <br>Consulting Excellence</h2>
+  <h2 class="section-title mn" style="display:none">Гурван үндсэн чиглэл</h2>
+  <div class="section-divider"></div>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-icon">🛡️</div>
+      <h3 class="en">Food Safety & Quality Management</h3>
+      <h3 class="mn" style="display:none">Хүнсний Аюулгүй байдал & Чанарын Менежмент</h3>
+      <p class="en">ISO 22000, FSSC 22000, HACCP implementation and audit readiness. We help food manufacturers build robust systems that meet international export standards.</p>
+      <p class="mn" style="display:none">ISO 22000, FSSC 22000, HACCP нэвтрүүлэх, аудитад бэлтгэх. Хүнсний үйлдвэрүүдэд олон улсын экспортын стандартад нийцсэн систем байгуулахад туслана.</p>
+      <div class="service-tags">
+        <span class="tag">ISO 22000</span>
+        <span class="tag">FSSC 22000</span>
+        <span class="tag">HACCP</span>
+        <span class="tag">GMP</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-icon">📊</div>
+      <h3 class="en">Project Management</h3>
+      <h3 class="mn" style="display:none">Төслийн Удирдлага</h3>
+      <p class="en">PMP-certified project leadership for complex organisational initiatives. From planning through execution, we deliver projects on scope, schedule, and budget.</p>
+      <p class="mn" style="display:none">PMP гэрчилгээтэй төслийн удирдлага. Төлөвлөлтөөс хэрэгжүүлэлт хүртэл хугацаа, төсөв, хамрах хүрээнд багтаан хүргэнэ.</p>
+      <div class="service-tags">
+        <span class="tag">PMP®</span>
+        <span class="tag">Agile</span>
+        <span class="tag">Risk Management</span>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-icon">⚙️</div>
+      <h3 class="en">Business Improvement</h3>
+      <h3 class="mn" style="display:none">Бизнесийн Сайжруулалт</h3>
+      <p class="en">Process optimisation, operational efficiency, and ISO 9001 quality systems. We identify gaps and implement sustainable improvements that drive real business outcomes.</p>
+      <p class="mn" style="display:none">Үйл явцын оновчлол, ажиллагааны үр ашиг, ISO 9001 чанарын систем. Дутагдалыг илрүүлж, тогтвортой сайжруулалт хэрэгжүүлнэ.</p>
+      <div class="service-tags">
+        <span class="tag">ISO 9001</span>
+        <span class="tag">Lean</span>
+        <span class="tag">Process Mapping</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<div class="about-section" id="about">
+  <div class="about-inner">
+    <div class="about-photo-frame">
+      <div class="about-photo-placeholder">
+        <div class="photo-icon">👤</div>
+        <div class="photo-hint en">Your professional photo here</div>
+        <div class="photo-hint mn" style="display:none">Таны мэргэжлийн зураг энд</div>
+      </div>
+    </div>
+    <div class="about-content">
+      <div class="section-eyebrow en">About the Founder</div>
+      <div class="section-eyebrow mn" style="display:none">Үүсгэн байгуулагчийн тухай</div>
+      <h2 class="section-title en">Bayartsetseg<br>— Specialist. Strategist. Leader.</h2>
+      <h2 class="section-title mn" style="display:none">Баярцэцэг<br>— Мэргэжилтэн. Стратегич. Удирдагч.</h2>
+      <div class="section-divider"></div>
+      <p class="about-body en">With over a decade of experience spanning Mongolia's largest food and beverage companies and postgraduate study in Australia, I bring rare dual expertise: deep technical knowledge of food safety systems combined with strategic project management capability.<br><br>At APU Company — Mongolia's leading F&B group — I led quality and food safety initiatives that shaped industry standards. Today, through Vertex Consulting Group, I translate that experience into practical results for organisations across Australia, Mongolia, and the Asia-Pacific.</p>
+      <p class="about-body mn" style="display:none">Монголын томоохон хүнс, ундааны компаниуд дахь арав гаруй жилийн туршлага болон Австралид суралцсан боловсролоороо техникийн мэдлэг болон стратегийн удирдлагын ховорхон хослолыг авчирдаг.<br><br>Монголын тэргүүлэх хүнс, ундааны групп болох APU Company-д хүнсний аюулгүй байдал, чанарын чиглэлээр удирдан ажилласан туршлагаа Vertex Consulting Group-ээр дамжуулан Австрали, Монгол болон Азийн орнуудын байгууллагуудад практик үр дүн болгон хүргэж байна.</p>
+      <div class="credentials-list">
+        <div class="cred-item">
+          <div class="cred-dot"></div>
+          <div class="cred-text">FSSC 22000 Certified</div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-dot"></div>
+          <div class="cred-text">ISO 22000 Lead Auditor</div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-dot"></div>
+          <div class="cred-text">ISO 9001 Certified</div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-dot"></div>
+          <div class="cred-text">PMP® Certified</div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-dot"></div>
+          <div class="cred-text">Master of Project Management, CQU</div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-dot"></div>
+          <div class="cred-text">B.Sc. Chemistry</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY -->
+<section id="why">
+  <div class="section-eyebrow en">Our Difference</div>
+  <div class="section-eyebrow mn" style="display:none">Бидний онцлог</div>
+  <h2 class="section-title en">Why Vertex Consulting</h2>
+  <h2 class="section-title mn" style="display:none">Яагаад Vertex Consulting вэ</h2>
+  <div class="section-divider"></div>
+
+  <div class="why-grid">
+    <div class="why-card">
+      <h4 class="en">Practitioner-Led, Not Theory-Driven</h4>
+      <h4 class="mn" style="display:none">Практик туршлага — онол биш</h4>
+      <p class="en">Every recommendation comes from real implementation experience inside major food manufacturing environments — not textbooks.</p>
+      <p class="mn" style="display:none">Бүх зөвлөмж нь томоохон хүнсний үйлдвэрлэлийн орчинд биечлэн хэрэгжүүлсэн туршлагаас гаралтай.</p>
+    </div>
+    <div class="why-card">
+      <h4 class="en">Bilingual — English & Mongolian</h4>
+      <h4 class="mn" style="display:none">Хос хэлтэй — Монгол & Англи</h4>
+      <p class="en">We bridge the gap between international standards and local context, communicating fluently in both English and Mongolian.</p>
+      <p class="mn" style="display:none">Олон улсын стандарт болон орон нутгийн контекстын хооронд гүүр болж, монгол болон англи хэл дээр чөлөөтэй ажилладаг.</p>
+    </div>
+    <div class="why-card">
+      <h4 class="en">Australia-Based, Asia-Pacific Focused</h4>
+      <h4 class="mn" style="display:none">Австрали суурьтай, Азид чиглэсэн</h4>
+      <p class="en">Headquartered in Brisbane with deep regional roots in Mongolia — uniquely positioned for cross-border consulting mandates.</p>
+      <p class="mn" style="display:none">Брисбен дахь штаб суурьтай, Монголд гүн гүнзгий холбоотой — хил дамнасан зөвлөх ажилд өвөрмөц байрлалтай.</p>
+    </div>
+    <div class="why-card">
+      <h4 class="en">End-to-End Delivery</h4>
+      <h4 class="mn" style="display:none">Эхнээс эцэс хүртэл хариуцна</h4>
+      <p class="en">From gap analysis and system design through to audit preparation and certification support — we stay with you to the finish line.</p>
+      <p class="mn" style="display:none">Цоорхойн дүн шинжилгээ, системийн зохиомжоос аудитад бэлтгэх, гэрчилгээ авах хүртэл — таны хажуудаа байна.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="section-eyebrow en">Get In Touch</div>
+    <div class="section-eyebrow mn" style="display:none">Холбоо барих</div>
+    <h2 class="section-title en">Ready to Elevate Your Standards?</h2>
+    <h2 class="section-title mn" style="display:none">Стандартаа дээшлүүлэхэд бэлэн үү?</h2>
+    <div class="section-divider" style="margin: 0 auto 32px;"></div>
+    <p class="contact-sub en">Book a free 30-minute consultation to discuss your organisation's quality and safety goals. We serve clients in Australia, Mongolia, and across the Asia-Pacific.</p>
+    <p class="contact-sub mn" style="display:none">Байгууллагынхаа чанар, аюулгүй байдлын зорилгыг хэлэлцэх 30 минутын үнэгүй зөвлөгөө авна уу. Австрали, Монгол болон Азийн орнуудад үйлчилдэг.</p>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="contact-item-label en">Email</div>
+        <div class="contact-item-label mn" style="display:none">И-мэйл</div>
+        <div class="contact-item-value">info@vertexconsulting.com</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label en">Location</div>
+        <div class="contact-item-label mn" style="display:none">Байршил</div>
+        <div class="contact-item-value">Brisbane, Australia</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label>LinkedIn</div>
+        <div class="contact-item-value">linkedin.com/in/bayartsetseg</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-label en">Languages</div>
+        <div class="contact-item-label mn" style="display:none">Хэл</div>
+        <div class="contact-item-value">English · Монгол</div>
+      </div>
+    </div>
+    <a href="https://calendly.com/bayartsetseg010/30min" target="_blank" class="btn-primary en">Book Free Consultation →</a>
+    <a href="https://calendly.com/bayartsetseg010/30min" target="_blank" class="btn-primary mn" style="display:none">Үнэгүй зөвлөгөө авах →</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Vertex<span>.</span>Consulting Group</div>
+  <div class="footer-copy">© 2025 Vertex Consulting Group. Brisbane, Australia.</div>
+</footer>
+
+<script>
+function setLang(lang) {
+  document.querySelectorAll('.en').forEach(el => {
+    el.style.display = lang === 'en' ? '' : 'none';
+  });
+  document.querySelectorAll('.mn').forEach(el => {
+    el.style.display = lang === 'mn' ? '' : 'none';
+  });
+  document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+}
+</script>
+
+</body>
+</html>
